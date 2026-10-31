@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Hackatón hexagonal — Presentación</title>
-<meta name="description" content="Presentación del Hackatón hexagonal (Arquitectura de Software): el problema, dominio, puertos y adaptadores, la regla de dependencias, el código, las pruebas, la API como adaptador, contenedores y las reglas del concurso. 12 diapositivas.">
+<meta name="description" content="Presentación del Hackatón hexagonal (Arquitectura de Software): el problema, dominio, puertos y adaptadores, la regla de dependencias, el código, las pruebas, la API como adaptador, contenedores y las reglas del concurso. 14 diapositivas.">
 <meta name="theme-color" content="#1d201c">
 <meta property="og:title" content="Hackatón hexagonal — Presentación">
-<meta property="og:description" content="Arquitectura de Software · Hackatón hexagonal · 12 diapositivas">
+<meta property="og:description" content="Arquitectura de Software · Hackatón hexagonal · 14 diapositivas">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,7 +81,7 @@
 </head>
 <body class="present">
 <main id="viewport" aria-label="Presentación: Hackatón hexagonal — Presentación">
-<div class="cell active" data-slide="cover" data-n="1" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="1 de 12: Hackatón hexagonal">
+<div class="cell active" data-slide="cover" data-n="1" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="1 de 14: Hackatón hexagonal">
 <section style="background:#1d201c;color:#f2efe6;font-family:'Source Serif 4',Georgia,serif;padding:120px 128px 150px;display:flex;flex-direction:column;gap:36px">
 <p style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#6fb1e0;line-height:1.3">Arquitectura de Software · Hackatón</p>
 <h1 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:132px;font-weight:700;line-height:1.02;color:#f2efe6;width:1500px">Hackatón hexagonal</h1>
@@ -90,7 +90,83 @@
 <p style="position:absolute;left:128px;bottom:56px;width:1500px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#9a9d8e">Arquitectura de Software · el negocio al centro, lo demás se enchufa</p>
 </section>
 </div>
-<div class="cell" data-slide="problema" data-n="2" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="2 de 12: Las reglas del negocio no deberían saber qué base de datos usas">
+<div class="cell" data-slide="caso" data-n="2" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="2 de 14: Una API que cuida las notas de un semestre">
+<section style="background:#fbfaf5;color:#21241f;font-family:'Source Serif 4',Georgia,serif;padding:88px 128px 150px;display:flex;flex-direction:column;gap:28px">
+<p style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#a84a14;line-height:1.3">El caso · Notas del semestre</p>
+<h2 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:80px;font-weight:700;line-height:1.05;color:#21241f">Una API que cuida las notas de un semestre</h2>
+<div style="display:flex;gap:32px;align-items:stretch">
+<div style="width:930px;display:flex;flex-direction:column;gap:0;background:#f1eee4;border-top:10px solid #a84a14;padding:10px 30px 14px">
+<div style="display:flex;flex-direction:column;gap:6px;padding:14px 0">
+<p style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#a84a14;line-height:1.3">Quién y qué</p>
+<p style="font-size:30px;line-height:1.35;color:#21241f">Cada estudiante registra sus evaluaciones (nombre, peso y nota) y quiere saber cuánto lleva acumulado.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px;padding:14px 0;border-top:2px solid #dbd7c9">
+<p style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#a84a14;line-height:1.3">El problema de hoy</p>
+<p style="font-size:30px;line-height:1.35;color:#21241f">Una hoja de cálculo: los pesos suman 120 %, aparece una nota de 7 y hay nombres repetidos.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px;padding:14px 0;border-top:2px solid #dbd7c9">
+<p style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#a84a14;line-height:1.3">Lo que se pide</p>
+<p style="font-size:30px;line-height:1.35;color:#21241f">Una API que cuide las reglas. Hoy la usa una web; mañana, una app y un bot.</p>
+</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px">
+<p style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#a84a14;line-height:1.3">Un ejemplo</p>
+<table style="width:702px;font-size:30px;color:#21241f;background:#fbfaf5">
+<tr><th style="width:46%;text-align:left;padding:12px 18px;color:#5c6158">Evaluación</th><th style="width:24%;text-align:right;padding:12px 18px;color:#5c6158">Peso</th><th style="width:30%;text-align:right;padding:12px 18px;color:#5c6158">Nota</th></tr>
+<tr><td style="text-align:left;padding:12px 18px">Parcial 1</td><td style="text-align:right;padding:12px 18px">30 %</td><td style="text-align:right;padding:12px 18px">4.5</td></tr>
+<tr style="background:#f1eee4"><td style="text-align:left;padding:12px 18px">Taller</td><td style="text-align:right;padding:12px 18px">20 %</td><td style="text-align:right;padding:12px 18px">3.8</td></tr>
+<tr><td style="text-align:left;padding:12px 18px">Proyecto</td><td style="text-align:right;padding:12px 18px">50 %</td><td style="text-align:right;padding:12px 18px">—</td></tr>
+</table>
+<p style="font-size:30px;line-height:1.35;color:#21241f">Acumulado: <b>2.11</b>, con el 50 % del semestre calificado.</p>
+<p style="font-family:'IBM Plex Mono',monospace;font-size:24px;line-height:1.4;color:#5c6158">30 % × 4.5 + 20 % × 3.8</p>
+</div>
+</div>
+<div style="display:flex;gap:16px;align-items:stretch">
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#f6e6d8;border:2px solid #a84a14;border-radius:12px;padding:22px 24px 26px">
+<h3 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:40px;font-weight:700;line-height:1.1;color:#a84a14">Quién pregunta</h3>
+<p style="font-size:28px;line-height:1.3;color:#3b3f38">Web · app · bot</p>
+</div>
+<div aria-hidden="true" style="background:#a84a14;width:48px;height:28px;align-self:center;display:block;flex:none;clip-path:polygon(0% 32%, 58% 32%, 58% 0%, 100% 50%, 58% 100%, 58% 68%, 0% 68%)"></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#1f5f8b;border-radius:12px;padding:22px 24px 26px">
+<h3 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:40px;font-weight:700;line-height:1.1;color:#fbfaf5">Las mismas reglas</h3>
+<p style="font-size:28px;line-height:1.3;color:#fbfaf5">Siempre iguales</p>
+</div>
+<div aria-hidden="true" style="background:#a84a14;width:48px;height:28px;align-self:center;display:block;flex:none;clip-path:polygon(0% 32%, 58% 32%, 58% 0%, 100% 50%, 58% 100%, 58% 68%, 0% 68%)"></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#f6e6d8;border:2px solid #a84a14;border-radius:12px;padding:22px 24px 26px">
+<h3 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:40px;font-weight:700;line-height:1.1;color:#a84a14">Dónde se guarda</h3>
+<p style="font-size:28px;line-height:1.3;color:#3b3f38">Memoria · archivo · base de datos</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:56px;width:1500px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#6b6f63">Arquitectura de Software · el mismo caso del ejercicio de APIs</p>
+</section>
+</div>
+<div class="cell" data-slide="reglas" data-n="3" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="3 de 14: Seis reglas, y quién se entera de cada una">
+<section style="background:#eae7de;color:#21241f;font-family:'Source Serif 4',Georgia,serif;padding:88px 128px 150px;display:flex;flex-direction:column;gap:26px">
+<p style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#a84a14;line-height:1.3">El caso · las reglas</p>
+<h2 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:80px;font-weight:700;line-height:1.05;color:#21241f">Seis reglas, y quién se entera de cada una</h2>
+<table style="width:1664px;font-size:28px;color:#21241f;background:#fbfaf5">
+<tr><th style="width:50%;text-align:left;padding:11px 22px;color:#5c6158">La regla del negocio</th><th style="width:30%;text-align:left;padding:11px 22px;color:#5c6158">El dominio avisa con</th><th style="width:20%;text-align:center;padding:11px 22px;color:#5c6158">HTTP responde</th></tr>
+<tr><td style="text-align:left;padding:11px 22px">El nombre es obligatorio (hasta 40 caracteres)</td><td style="text-align:left;padding:11px 22px;font-family:'IBM Plex Mono',monospace;font-size:26px"><span style="color:#1f5f8b;font-weight:600">NOMBRE_INVALIDO</span></td><td style="text-align:center;padding:11px 22px"><span style="color:#a84a14;font-weight:700">422</span></td></tr>
+<tr style="background:#f1eee4"><td style="text-align:left;padding:11px 22px">El peso es un entero entre 1 y 100</td><td style="text-align:left;padding:11px 22px;font-family:'IBM Plex Mono',monospace;font-size:26px"><span style="color:#1f5f8b;font-weight:600">PESO_INVALIDO</span></td><td style="text-align:center;padding:11px 22px"><span style="color:#a84a14;font-weight:700">422</span></td></tr>
+<tr><td style="text-align:left;padding:11px 22px">La nota va de 0 a 5</td><td style="text-align:left;padding:11px 22px;font-family:'IBM Plex Mono',monospace;font-size:26px"><span style="color:#1f5f8b;font-weight:600">NOTA_INVALIDA</span></td><td style="text-align:center;padding:11px 22px"><span style="color:#a84a14;font-weight:700">422</span></td></tr>
+<tr style="background:#f1eee4"><td style="text-align:left;padding:11px 22px">El nombre no se repite</td><td style="text-align:left;padding:11px 22px;font-family:'IBM Plex Mono',monospace;font-size:26px"><span style="color:#1f5f8b;font-weight:600">NOMBRE_REPETIDO</span></td><td style="text-align:center;padding:11px 22px"><span style="color:#a84a14;font-weight:700">409</span></td></tr>
+<tr><td style="text-align:left;padding:11px 22px">Los pesos juntos no pasan de 100</td><td style="text-align:left;padding:11px 22px;font-family:'IBM Plex Mono',monospace;font-size:26px"><span style="color:#1f5f8b;font-weight:600">PESO_EXCEDIDO</span></td><td style="text-align:center;padding:11px 22px"><span style="color:#a84a14;font-weight:700">409</span></td></tr>
+<tr style="background:#f1eee4"><td style="text-align:left;padding:11px 22px">La evaluación tiene que existir</td><td style="text-align:left;padding:11px 22px;font-family:'IBM Plex Mono',monospace;font-size:26px"><span style="color:#1f5f8b;font-weight:600">NO_EXISTE</span></td><td style="text-align:center;padding:11px 22px"><span style="color:#a84a14;font-weight:700">404</span></td></tr>
+</table>
+<div style="display:flex;gap:24px">
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#fbfaf5;border-top:10px solid #1f5f8b;padding:26px 30px 32px">
+<h3 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:44px;font-weight:700;line-height:1.1;color:#1f5f8b">Además, un cálculo</h3>
+<p style="font-size:28px;line-height:1.35;color:inherit">Acumulado = suma de peso ÷ 100 × nota. Con 30 % × 4.5 y 20 % × 3.8 da 2.11.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#fbfaf5;border-top:10px solid #a84a14;padding:26px 30px 32px">
+<h3 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:44px;font-weight:700;line-height:1.1;color:#a84a14">Cada capa, lo suyo</h3>
+<p style="font-size:28px;line-height:1.35;color:inherit">El dominio dice qué regla se rompió. El adaptador HTTP decide cómo contarlo: 422, 409 o 404.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:56px;width:1500px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#5c6158">Arquitectura de Software · estas reglas ya vienen escritas en el dominio</p>
+</section>
+</div>
+<div class="cell" data-slide="problema" data-n="4" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="4 de 14: Las reglas del negocio no deberían saber qué base de datos usas">
 <section style="background:#fbfaf5;color:#21241f;font-family:'Source Serif 4',Georgia,serif;padding:88px 128px 150px;display:flex;flex-direction:column;gap:30px">
 <p style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#a84a14;line-height:1.3">El problema</p>
 <h2 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:76px;font-weight:700;line-height:1.05;color:#21241f">Las reglas del negocio no deberían saber qué base de datos usas</h2>
@@ -123,7 +199,7 @@
 <p style="position:absolute;left:128px;bottom:56px;width:1500px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#6b6f63">Arquitectura de Software · hoy lo desarmamos</p>
 </section>
 </div>
-<div class="cell" data-slide="idea" data-n="3" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="3 de 12: El negocio al centro; lo demás, alrededor">
+<div class="cell" data-slide="idea" data-n="5" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="5 de 14: El negocio al centro; lo demás, alrededor">
 <section style="background:#eae7de;color:#21241f;font-family:'Source Serif 4',Georgia,serif;padding:88px 128px 150px;display:flex;flex-direction:column;gap:28px">
 <p style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#a84a14;line-height:1.3">La idea</p>
 <h2 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:80px;font-weight:700;line-height:1.05;color:#21241f">El negocio al centro; lo demás, alrededor</h2>
@@ -158,7 +234,7 @@
 <p style="position:absolute;left:128px;bottom:56px;width:1664px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#5c6158">Cockburn, A. (2005). Hexagonal architecture · también llamada «puertos y adaptadores»</p>
 </section>
 </div>
-<div class="cell" data-slide="puertos" data-n="4" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="4 de 12: Un puerto es un acuerdo; un adaptador lo cumple">
+<div class="cell" data-slide="puertos" data-n="6" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="6 de 14: Un puerto es un acuerdo; un adaptador lo cumple">
 <section style="background:#fbfaf5;color:#21241f;font-family:'Source Serif 4',Georgia,serif;padding:88px 128px 150px;display:flex;flex-direction:column;gap:28px">
 <p style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#3a6330;line-height:1.3">Puertos y adaptadores</p>
 <h2 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:76px;font-weight:700;line-height:1.05;color:#21241f">Un puerto es un acuerdo; un adaptador lo cumple</h2>
@@ -171,7 +247,7 @@
 <p style="position:absolute;left:128px;bottom:56px;width:1664px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#6b6f63">Arquitectura de Software · en nuestro ejercicio: un puerto de salida y dos adaptadores</p>
 </section>
 </div>
-<div class="cell" data-slide="regla" data-n="5" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="5 de 12: Todas las flechas apuntan hacia adentro">
+<div class="cell" data-slide="regla" data-n="7" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="7 de 14: Todas las flechas apuntan hacia adentro">
 <section style="background:#1d201c;color:#f2efe6;font-family:'Source Serif 4',Georgia,serif;padding:88px 128px 150px;display:flex;flex-direction:column;gap:30px">
 <p style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#6fb1e0;line-height:1.3">Una sola regla</p>
 <h2 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:80px;font-weight:700;line-height:1.05;color:#f2efe6">Todas las flechas apuntan hacia adentro</h2>
@@ -211,7 +287,7 @@
 <p style="position:absolute;left:128px;bottom:56px;width:1500px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#9a9d8e">Arquitectura de Software · la regla de dependencias</p>
 </section>
 </div>
-<div class="cell" data-slide="codigo" data-n="6" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="6 de 12: El caso de uso recibe el puerto; la composición elige el adaptador">
+<div class="cell" data-slide="codigo" data-n="8" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="8 de 14: El caso de uso recibe el puerto; la composición elige el adaptador">
 <section style="background:#fbfaf5;color:#21241f;font-family:'Source Serif 4',Georgia,serif;padding:88px 128px 150px;display:flex;flex-direction:column;gap:28px">
 <p style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#1f5f8b;line-height:1.3">En código</p>
 <h2 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:64px;font-weight:700;line-height:1.05;color:#21241f">El caso de uso recibe el puerto; la composición elige el adaptador</h2>
@@ -244,7 +320,7 @@
 <p style="position:absolute;left:128px;bottom:56px;width:1500px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#6b6f63">Arquitectura de Software · así se verá en el ejercicio</p>
 </section>
 </div>
-<div class="cell" data-slide="probar" data-n="7" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="7 de 12: Probar el negocio sin servidor ni base de datos">
+<div class="cell" data-slide="probar" data-n="9" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="9 de 14: Probar el negocio sin servidor ni base de datos">
 <section style="background:#eae7de;color:#21241f;font-family:'Source Serif 4',Georgia,serif;padding:88px 128px 150px;display:flex;flex-direction:column;gap:28px">
 <p style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#3a6330;line-height:1.3">Lo que se gana</p>
 <h2 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:76px;font-weight:700;line-height:1.05;color:#21241f">Probar el negocio sin servidor ni base de datos</h2>
@@ -260,7 +336,7 @@
 <p style="position:absolute;left:128px;bottom:56px;width:1664px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#5c6158">Arquitectura de Software · es lo que Cockburn buscaba: probar sin los dispositivos ni las bases reales</p>
 </section>
 </div>
-<div class="cell" data-slide="api" data-n="8" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="8 de 12: La API es un adaptador de entrada: traduce, no decide">
+<div class="cell" data-slide="api" data-n="10" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="10 de 14: La API es un adaptador de entrada: traduce, no decide">
 <section style="background:#fbfaf5;color:#21241f;font-family:'Source Serif 4',Georgia,serif;padding:88px 128px 150px;display:flex;flex-direction:column;gap:28px">
 <p style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#a84a14;line-height:1.3">Y la API</p>
 <h2 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:72px;font-weight:700;line-height:1.05;color:#21241f">La API es un adaptador de entrada: traduce, no decide</h2>
@@ -290,7 +366,7 @@
 <p style="position:absolute;left:128px;bottom:56px;width:1664px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#6b6f63">Arquitectura de Software · REST es la forma del adaptador, no el corazón del sistema</p>
 </section>
 </div>
-<div class="cell" data-slide="contenedores" data-n="9" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="9 de 12: Dos motores, el mismo archivo">
+<div class="cell" data-slide="contenedores" data-n="11" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="11 de 14: Dos motores, el mismo archivo">
 <section style="background:#1d201c;color:#f2efe6;font-family:'Source Serif 4',Georgia,serif;padding:88px 128px 150px;display:flex;flex-direction:column;gap:26px">
 <p style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#6fb1e0;line-height:1.3">Contenedores</p>
 <h2 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:80px;font-weight:700;line-height:1.05;color:#f2efe6">Dos motores, el mismo archivo</h2>
@@ -317,7 +393,7 @@
 <p style="position:absolute;left:128px;bottom:56px;width:1664px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#9a9d8e">Arquitectura de Software · instalen uno de los dos (con los dos hay puntos extra)</p>
 </section>
 </div>
-<div class="cell" data-slide="concurso" data-n="10" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="10 de 12: Cada etapa se verifica sola, y se anota">
+<div class="cell" data-slide="concurso" data-n="12" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="12 de 14: Cada etapa se verifica sola, y se anota">
 <section style="background:#1f5f8b;color:#fbfaf5;font-family:'Source Serif 4',Georgia,serif;padding:88px 128px 150px;display:flex;flex-direction:column;gap:30px">
 <p style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#cfe3f3;line-height:1.3">El hackatón</p>
 <h2 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:80px;font-weight:700;line-height:1.05;color:#fbfaf5">Cada etapa se verifica sola, y se anota</h2>
@@ -339,7 +415,7 @@
 <p style="position:absolute;left:128px;bottom:56px;width:1664px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#cfe3f3">Arquitectura de Software · gana quien más puntos tenga al final; el desempate es la hora de la última etapa</p>
 </section>
 </div>
-<div class="cell" data-slide="etapas" data-n="11" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="11 de 12: Seis etapas, 100 puntos y dos extras">
+<div class="cell" data-slide="etapas" data-n="13" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="13 de 14: Seis etapas, 100 puntos y dos extras">
 <section style="background:#fbfaf5;color:#21241f;font-family:'Source Serif 4',Georgia,serif;padding:88px 128px 150px;display:flex;flex-direction:column;gap:26px">
 <p style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#a84a14;line-height:1.3">Las etapas</p>
 <h2 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:80px;font-weight:700;line-height:1.05;color:#21241f">Seis etapas, 100 puntos y dos extras</h2>
@@ -356,7 +432,7 @@
 <p style="position:absolute;left:128px;bottom:56px;width:1664px;font-family:'IBM Plex Mono',monospace;font-size:24px;color:#6b6f63">Arquitectura de Software · cada etapa se apoya en la anterior: conviene hacerlas en orden</p>
 </section>
 </div>
-<div class="cell" data-slide="cierre" data-n="12" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="12 de 12: Tres ideas y a competir">
+<div class="cell" data-slide="cierre" data-n="14" tabindex="0" role="group" aria-roledescription="diapositiva" aria-label="14 de 14: Tres ideas y a competir">
 <section style="background:#1d201c;color:#f2efe6;font-family:'Source Serif 4',Georgia,serif;padding:88px 128px 150px;display:flex;flex-direction:column;gap:30px">
 <p style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#6fb1e0;line-height:1.3">Para llevarse</p>
 <h2 style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:88px;font-weight:700;line-height:1.05;color:#f2efe6">Tres ideas y a competir</h2>
@@ -389,7 +465,7 @@
   <a href="/guia.html" title="Guía del laboratorio">Guía</a>
   <span class="sep only-present" aria-hidden="true"></span>
   <button type="button" id="ui-prev" class="only-present" aria-label="Diapositiva anterior" title="Anterior (←)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-  <span id="ui-count" class="only-present" aria-live="polite">1 / 12</span>
+  <span id="ui-count" class="only-present" aria-live="polite">1 / 14</span>
   <button type="button" id="ui-next" class="only-present" aria-label="Diapositiva siguiente" title="Siguiente (→)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
   <span class="sep" aria-hidden="true"></span>
   <button type="button" id="ui-grid" aria-label="Ver todas las diapositivas" aria-pressed="false" title="Ver todas (O)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></button>
@@ -399,7 +475,7 @@
 
 <script>
 (() => {
-  const ids = ["cover","problema","idea","puertos","regla","codigo","probar","api","contenedores","concurso","etapas","cierre"];
+  const ids = ["cover","caso","reglas","problema","idea","puertos","regla","codigo","probar","api","contenedores","concurso","etapas","cierre"];
   const body = document.body;
   const root = document.documentElement;
   const cells = [...document.querySelectorAll('.cell')];

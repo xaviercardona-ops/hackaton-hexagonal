@@ -446,7 +446,8 @@
     </div>
     <div class="stats"><span><b>6</b> etapas · <b>100</b> puntos</span><span><b>2</b> extras de <b>10</b></span><span>Docker o Podman</span><span>equipos de 3 · JavaScript · sin dependencias</span></div>
     <ul class="toc">
-      <li><a href="#reglas">Las reglas</a></li>
+      <li><a href="#caso">El caso</a></li>
+      <li><a href="#reglas">Las reglas del juego</a></li>
       <li><a href="#antes">Antes de empezar</a></li>
       <li><a href="#empiecen">Empiecen así</a></li>
       <li><a href="#mapa">El proyecto</a></li>
@@ -456,6 +457,7 @@
       <li><a href="#e3">3 · La API HTTP</a></li>
       <li><a href="#e4">4 · Composición</a></li>
       <li><a href="#e5">5 · Imagen</a></li>
+      <li><a href="#recorrido">Cómo viaja una petición</a></li>
       <li><a href="#extras">Extras</a></li>
       <li><a href="#trucos">Hoja de trucos</a></li>
       <li><a href="#problemas">Problemas frecuentes</a></li>
@@ -464,7 +466,29 @@
 
     <hr class="div">
 
-    <h2 id="reglas">Las reglas</h2>
+    <h2 id="caso">El caso: Notas del semestre</h2>
+    <p>Es el mismo caso del ejercicio de APIs. <strong>Cada estudiante</strong> registra las evaluaciones del semestre (nombre, peso y nota) y quiere saber cuánto lleva acumulado. Hoy lo hace en una hoja de cálculo donde los pesos suman 120 %, aparece una nota de 7 y se repiten nombres. Se pide <strong>una API que cuide las reglas</strong>: hoy la usa una web; mañana, una app y un bot; hoy guarda en memoria o en un archivo, mañana en una base de datos. <strong>Las reglas no pueden cambiar según quién pregunte ni según dónde se guarde.</strong> De eso trata el hackatón.</p>
+    <div class="table-wrap">
+      <table class="plain wrap">
+        <thead><tr><th>Regla</th><th>El dominio avisa con</th><th>HTTP</th></tr></thead>
+        <tbody>
+          <tr><td>El nombre es obligatorio (hasta 40 caracteres)</td><td><code>NOMBRE_INVALIDO</code></td><td>422</td></tr>
+          <tr><td>El peso es un entero entre 1 y 100</td><td><code>PESO_INVALIDO</code></td><td>422</td></tr>
+          <tr><td>La nota va de 0 a 5</td><td><code>NOTA_INVALIDA</code></td><td>422</td></tr>
+          <tr><td>El nombre no se repite</td><td><code>NOMBRE_REPETIDO</code></td><td>409</td></tr>
+          <tr><td>Los pesos juntos no pasan de 100</td><td><code>PESO_EXCEDIDO</code></td><td>409</td></tr>
+          <tr><td>La evaluación tiene que existir</td><td><code>NO_EXISTE</code></td><td>404</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="section-note">El <strong>acumulado</strong> es la suma de <em>peso ÷ 100 × nota</em> de las evaluaciones ya calificadas. Ejemplo: Parcial 1 (30 %, nota 4.5) y Taller (20 %, nota 3.8) dan 1.35 + 0.76 = <strong>2.11</strong>, con el 50 % del semestre calificado.</p>
+    <div class="callout"><span class="label">Qué se juega aquí</span>
+      <p><strong>El dominio</strong> (ya escrito en <code>src/dominio/evaluacion.js</code>) decide qué regla se rompió y avisa con un código; no sabe nada de HTTP ni de archivos. <strong>El caso de uso</strong> (etapa 1) le da lo que necesita, como la lista de lo ya guardado, porque el dominio no puede ir a buscarla. <strong>El adaptador HTTP</strong> (etapa 3) decide cómo contarlo: 422, 409 o 404. <strong>El adaptador de salida</strong> (etapa 2) guarda donde toque. Ustedes construyen todo lo que rodea al dominio, y después lo <a href="#recorrido">ven funcionar capa por capa</a>.</p>
+    </div>
+
+    <hr class="div">
+
+    <h2 id="reglas">Las reglas del juego</h2>
     <div class="callout warn"><span class="label">Cinco reglas</span>
       <p><strong>1.</strong> Equipos de <strong>3</strong> (mínimo 2) y <strong>un repositorio público</strong> por equipo, creado desde la plantilla.
       <strong>2.</strong> Cada etapa tiene un <strong>verificador</strong>: <code>npm run verificar</code>. Lo que pasa queda anotado en <code>progreso.json</code>, con la hora de la <em>primera</em> vez que pasó.
@@ -504,6 +528,7 @@ npm run verificar -- 1 2 3 4</code></pre>
           <tr><td><code>npm run verificar</code></td><td>Comprueba las etapas 0 a 5 y las anota en <code>progreso.json</code></td></tr>
           <tr><td><code>npm run verificar -- 1 3</code></td><td>Solo las etapas que digas (más rápido mientras trabajas)</td></tr>
           <tr><td><code>npm run verificar -- extras</code></td><td>Los dos extras (volumen y dos motores)</td></tr>
+          <tr><td><code>node recorrido.mjs</code></td><td>Muestra, capa por capa, cómo viaja una petición por <em>su</em> hexágono (necesita las etapas 1, 2 y 3; ver <a href="#recorrido">más abajo</a>)</td></tr>
           <tr><td><code>npm start</code></td><td>Arranca la API en tu máquina: <code>http://localhost:3000</code> (memoria). Con <code>ALMACEN=archivo npm start</code> guarda en <code>datos/evaluaciones.json</code></td></tr>
         </tbody>
       </table>
@@ -636,6 +661,24 @@ docker rm -f notas</code></pre>
         <li><strong>Qué copiar:</strong> <code>package.json</code> y la carpeta <code>src</code>. El proyecto no tiene dependencias, así que <strong>no hace falta <code>npm install</code></strong>. El archivo <code>.dockerignore</code> ya viene hecho.</li>
         <li><strong>Cómo arranca:</strong> <code>CMD ["node", "src/main.mjs"]</code>. El servidor ya escucha en <code>0.0.0.0</code> y lee <code>PORT</code>: fijen <code>ENV PORT=3000</code> y <code>EXPOSE 3000</code>.</li>
         <li><strong>«No responde en /salud»:</strong> ¿publicaron el puerto (<code>-p 3000:3000</code>)? ¿La aplicación escucha en 0.0.0.0? Miren el registro: <code>docker logs notas</code>.</li>
+      </ul>
+    </details>
+
+    <hr class="div">
+
+    <h2 id="recorrido">Miren cómo viaja una petición</h2>
+    <p class="section-note">Cuando tengan hechas las etapas <strong>1, 2 y 3</strong> (la 4 y la 5 no hacen falta), corran:</p>
+<pre class="code"><code>node recorrido.mjs</code></pre>
+    <p>El archivo arma la API con <em>su</em> código, manda cinco peticiones de verdad y escribe, línea por línea, <strong>quién llamó a quién</strong>: la ruta HTTP, el caso de uso, el puerto con su adaptador de almacenamiento, y el dominio decidiendo. Al final repite todo con el otro almacén (memoria y archivo) y compara. <strong>No da puntos</strong>: sirve para <em>ver</em> la arquitectura que construyeron.</p>
+    <p>Si su repositorio se creó antes de que existiera este archivo, bájenlo a la raíz del proyecto:</p>
+<pre class="code"><code>curl -O https://raw.githubusercontent.com/xaviercardona-ops/hackaton-hexagonal/HEAD/recorrido.mjs</code></pre>
+    <p class="section-note" style="overflow-wrap:anywhere">En PowerShell: <code>Invoke-WebRequest https://raw.githubusercontent.com/xaviercardona-ops/hackaton-hexagonal/HEAD/recorrido.mjs -OutFile recorrido.mjs</code>. O cópienlo desde el repositorio de la plantilla.</p>
+    <details class="pistas"><summary>Para pensar (y para contárselo al equipo)</summary>
+      <ul class="lista">
+        <li>En la petición 2, ¿quién decidió que el peso 0 no vale: la ruta, el caso de uso o el dominio? ¿Quién lo convirtió en 422?</li>
+        <li>Si mañana el almacén fuera una base de datos, ¿qué archivos tocarían? ¿Cuáles <strong>no</strong>?</li>
+        <li>¿Qué pasaría si <code>src/dominio/evaluacion.js</code> importara <code>node:fs</code>? ¿Qué etapa lo detectaría?</li>
+        <li>El caso de uso llamó al almacén, pero en su código no importa ningún adaptador. ¿Cómo le llegó el repositorio? (Pista: etapa 4.)</li>
       </ul>
     </details>
 

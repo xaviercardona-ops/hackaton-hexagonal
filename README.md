@@ -8,6 +8,10 @@ adaptadores) y la empacan en un **contenedor** (Docker o Podman). Cada etapa se 
 - **Qué necesitan:** [Node.js](https://nodejs.org) **22 o superior**, Git, una cuenta de GitHub y **Docker o Podman** (instálenlo ya: la descarga es grande)
 - **Sin dependencias:** no hay `npm install`; el proyecto es Node puro
 
+## El caso
+
+**Notas del semestre** (el mismo del ejercicio de APIs): cada estudiante registra sus evaluaciones (nombre, peso y nota) y quiere saber cuánto lleva acumulado. Se pide una API que cuide las reglas: el nombre no se repite, el peso va de 1 a 100 y entre todos no pasan de 100, la nota va de 0 a 5. Hoy la usa una web y guarda en memoria o en un archivo; mañana, una app y una base de datos. **Las reglas no pueden cambiar según quién pregunte ni según dónde se guarde:** de eso trata el hackatón. El detalle está en la [guía](https://hackaton-hexagonal.vercel.app/guia.html#caso).
+
 ## Empieza aquí
 
 1. Lee la **guía** (reglas, etapas, pistas, hoja de trucos): https://hackaton-hexagonal.vercel.app/guia.html
@@ -39,6 +43,7 @@ npm run verificar                 # las etapas 0 a 5
 npm run verificar -- 1 3          # solo las que digas
 npm run verificar -- extras       # los extras 6 y 7
 npm start                         # la API en http://localhost:3000 (memoria)
+node recorrido.mjs                # cómo viaja una petición por tus capas (necesita las etapas 1, 2 y 3; no da puntos)
 ALMACEN=archivo npm start         # la API guardando en datos/evaluaciones.json
 ```
 
@@ -59,6 +64,7 @@ src/
   main.mjs                               El arranque (ya escrito)
 pruebas/                                 Lo que comprueba cada etapa: es la especificación
 verificar.mjs                            El verificador (escribe progreso.json)
+recorrido.mjs                            Muestra, capa por capa, quién llama a quién (no da puntos)
 equipo.json                              El nombre de tu equipo
 docs/                                    El sitio: guía, marcador y presentación
 ```
